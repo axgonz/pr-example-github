@@ -1,0 +1,96 @@
+{
+    "regionPrefixLookup": {
+        "//": "Use the well known abbreviations from Microsoft docs.",
+        "australiacentral": "auc",
+        "australiaeast": "aue",
+        "australiasoutheast": "ase"
+    },
+    "addressPrefixLookup": {
+        "//": "Use a separate /16 for each region",
+        "australiacentral": "10.0.0.0/16",
+        "australiaeast": "10.1.0.0/16",
+        "australiasoutheast": "10.2.0.0/16"
+    },
+    "hub": {
+        "name": "${shortLocation}-hub",
+        "prefix": "${octet1}.${octet2}.0.0/22",
+        "gatewaySubnet": {
+            "prefix": "${octet1}.${octet2}.0.0/24"
+        },
+        "azureFirewallSubnet": {
+            "prefix": "${octet1}.${octet2}.1.0/26",
+            "lbIpAddress": "${octet1}.${octet2}.1.4"
+        },
+        "azureFirewallManagementSubnet": {
+            "prefix": "${octet1}.${octet2}.1.64/26"
+        },
+        "nvaManagementSubnet": {
+            "name": "NvaManagementSubnet",
+            "prefix": "${octet1}.${octet2}.1.128/28"
+        },
+        "nvaDiagnosticSubnet": {
+            "name": "NvaDiagnosticSubnet",
+            "prefix": "${octet1}.${octet2}.1.144/28"
+        },
+        "nvaInternalSubnet": {
+            "name": "NvaInternalSubnet",
+            "prefix": "${octet1}.${octet2}.1.160/28",
+            "lbIpAddress": "${octet1}.${octet2}.1.174"
+        },
+        "nvaPublicSubnet": {
+            "name": "NvaPublicSubnet",
+            "prefix": "${octet1}.${octet2}.1.176/28"
+        },          
+        "azureBastionSubnet": {
+            "prefix": "${octet1}.${octet2}.1.192/27"
+        },
+        "routeServerSubnet": {
+            "prefix": "${octet1}.${octet2}.1.224/27"
+        },      
+        "applicationGatewaySubnet1": {
+            "name": "ApplicationGatewaySubnet1",
+            "prefix": "${octet1}.${octet2}.2.0/25"
+        },
+        "applicationGatewaySubnet2": {
+            "name": "ApplicationGatewaySubnet2",
+            "prefix": "${octet1}.${octet2}.2.128/25"
+        },
+        "applicationGatewaySubnet3": {
+            "name": "ApplicationGatewaySubnet3",
+            "prefix": "${octet1}.${octet2}.3.0/25"
+        },
+        "vmSubnet1": {
+            "name": "VmSubnet1-AD",
+            "prefix": "${octet1}.${octet2}.3.128/28"
+        },
+        "vmSubnet2": {
+            "name": "VmSubnet2-JB",
+            "prefix": "${octet1}.${octet2}.3.144/28"
+        },  
+        "_routeViaNva": [
+            "vmSubnet1",
+            "vmSubnet2"
+        ]
+    },
+    "spokes": {
+        "spoke1": {
+            "name": "${shortLocation}-spoke1",
+            "prefix": "${octet1}.${octet2}.4.0/24"
+        },
+        "spoke2": {
+            "name": "${shortLocation}-spoke2",
+            "prefix": "${octet1}.${octet2}.5.0/24"
+        },
+        "spoke3": {
+            "name": "${shortLocation}-spoke3",
+            "prefix": ""
+        },
+        "_routeViaNva": [
+            "spoke1",
+            "spoke2"
+        ],
+        "_peerToHub": [
+        ]       
+    },
+    "routeTableNextHop": "afw"
+}
