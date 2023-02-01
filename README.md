@@ -2,32 +2,31 @@
 
 ## Workflow
 
-This repository uses a feature branch development workflow with environment branches for prod and optionally uat.
+This repository uses feature-branch development and trunk-based deployment.
 
-![Workflow diagram](doc/workflow.png)
+![Workflow diagram](doc/workflow-trunk.png)
+
+> **Note:** the following learn article describes this process comprehensively: [Review Azure infrastructure changes by using Bicep and pull requests > Understand branching](https://learn.microsoft.com/en-us/training/modules/review-azure-infrastructure-changes-using-bicep-pull-requests/2-understand-branching?pivots=github).
 
 ### Branches
 
-**prod** | **uat** | **main** | **feature-*xyz***
----- | ---- | ---- | ---- 
-The last configuration deployed to production. | Optional quality assurance gate before production. | Collection of safe and tested configurations desired in production. | A new, untested configuration.
+**main** | **feature-*xyz***
+---- | ----
+Collection of safe and tested configurations desired in production. | A new, untested configuration.
 
 ### Lifecycle
-- The main branch and each environment branch are long running.
-- Each feature branch starts from main and is deleted when merged (via uat) into production.
+- The main branch is the only long running branch.
+- Each feature branch starts from main and is deleted when merged into main.
+
+### Protection
+- The main branch is protected and changes can only be made through pull requests.
 
 ### Checks
-- Automated tests are triggered by any PR into main.
+- Automated tests are triggered by any pull request into main.
 - Merges into main can only occur once automated tests pass.
-- There are no automated checks on any other branch.
-
-### Environments
-- If uat is used it cannot be skipped.
-- Each environment branch maps to an environment and merges will automatically trigger a deployment.
-- Environment deployments require an approval to accommodate deployment scheduling.
 
 ### Deployment
-
+- Successful merges into main automatically trigger a deployment (to one or more environments in series or in parallel).
 - Authors of feature branches will deploy to development/sandpit environments manually using steps below:
 
 ``` bash
